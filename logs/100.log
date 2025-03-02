@@ -1,0 +1,131 @@
+
+==================================================
+Initializing with parameters: (np.float64(2.776247174936222), np.float64(0.6069341493735683), np.float64(0.4421040465339125), np.float64(456.8695537103817), 1.0, 0.5, 0.5)
+==================================================
+
+Step    0: Loss=0.018381, Best Loss=0.018381, Grad Norm=1.72e-01
+Parameters: L0=2.7249, A=0.5566, alpha=0.4471, B=456.5911, C=0.9495, beta=0.4950, gamma=0.4950
+
+Step   10: Loss=0.002123, Best Loss=0.002123, Grad Norm=8.28e-02
+Parameters: L0=2.6761, A=0.5407, alpha=0.4587, B=454.2884, C=1.0772, beta=0.4986, gamma=0.5071
+
+Step   20: Loss=0.002362, Best Loss=0.001127, Grad Norm=1.75e-01
+Parameters: L0=2.6574, A=0.5767, alpha=0.4709, B=452.0522, C=1.3198, beta=0.5114, gamma=0.5331
+
+Step   30: Loss=0.001383, Best Loss=0.000578, Grad Norm=1.63e-01
+Parameters: L0=2.6601, A=0.6154, alpha=0.4761, B=449.8577, C=1.5092, beta=0.5241, gamma=0.5551
+
+Step   40: Loss=0.001091, Best Loss=0.000578, Grad Norm=1.44e-01
+Parameters: L0=2.6526, A=0.5982, alpha=0.4713, B=447.6682, C=1.5920, beta=0.5309, gamma=0.5656
+
+Step   50: Loss=0.000503, Best Loss=0.000365, Grad Norm=8.65e-02
+Parameters: L0=2.6623, A=0.5938, alpha=0.4634, B=445.5457, C=1.7029, beta=0.5429, gamma=0.5823
+
+Step   60: Loss=0.000321, Best Loss=0.000311, Grad Norm=3.36e-02
+Parameters: L0=2.6544, A=0.5968, alpha=0.4628, B=443.4546, C=1.8598, beta=0.5599, gamma=0.6067
+
+Step   70: Loss=0.000287, Best Loss=0.000287, Grad Norm=2.28e-02
+Parameters: L0=2.6553, A=0.5960, alpha=0.4579, B=441.3993, C=1.9806, beta=0.5753, gamma=0.6270
+
+Step   80: Loss=0.000277, Best Loss=0.000277, Grad Norm=8.83e-03
+Parameters: L0=2.6532, A=0.6015, alpha=0.4555, B=439.3624, C=2.0798, beta=0.5894, gamma=0.6450
+
+Step   90: Loss=0.000283, Best Loss=0.000275, Grad Norm=2.75e-02
+Parameters: L0=2.6511, A=0.6024, alpha=0.4521, B=437.3427, C=2.1530, beta=0.6013, gamma=0.6594
+
+Step  100: Loss=0.000282, Best Loss=0.000275, Grad Norm=1.16e-02
+Parameters: L0=2.6487, A=0.6051, alpha=0.4496, B=435.3404, C=2.2119, beta=0.6118, gamma=0.6719
+
+Early stopping at step 107: No improvement for 20 steps.
+Train Set Evaluation:
+cosine_24000.csv
+huber_loss: 0.00011608230725651654
+mse_loss: 1.949714161156523e-05
+rmse_loss: 0.004415556772544685
+mae_loss: 0.0032781051570879276
+prede: 0.001067425915258707
+worste: 0.0037060555645734637
+r2_score: 0.9993365158371322
+constant_24000.csv
+huber_loss: 3.639274344041545e-05
+mse_loss: 4.27678835365961e-06
+rmse_loss: 0.0020680397369633907
+mae_loss: 0.0018486950257198622
+prede: 0.0005860237425213507
+worste: 0.00138958734757789
+r2_score: 0.9998136811558801
+wsdcon_9.csv
+huber_loss: 0.0001284872251259708
+mse_loss: 4.021885241776146e-05
+rmse_loss: 0.00634183352176336
+mae_loss: 0.004934622952946522
+prede: 0.0015791912651248173
+worste: 0.005465802309113901
+r2_score: 0.9986414862157197
+Average Huber_loss: 9.365409194096758e-05
+Average Mse_loss: 2.1330927460995432e-05
+Average Rmse_loss: 0.0042751433437571455
+Average Mae_loss: 0.0033538077119181033
+Average Prede: 0.001077546974301625
+Average Worste: 0.003520481740421752
+Average R2_score: 0.9992638944029107
+--------------------------------------------------
+Test Set Evaluation:
+constant_72000.csv
+huber_loss: 0.0006247738389980604
+mse_loss: 3.209226080802903e-05
+rmse_loss: 0.00566500316046064
+mae_loss: 0.004776167134463194
+prede: 0.0015839410972218763
+worste: 0.006637749359482806
+r2_score: 0.9979590918716806
+cosine_72000.csv
+huber_loss: 0.0010756190743544088
+mse_loss: 6.738459098459398e-05
+rmse_loss: 0.00820881178883972
+mae_loss: 0.007265125913143878
+prede: 0.0024507701965283644
+worste: 0.00454538605539939
+r2_score: 0.996986831109932
+wsd_20000_24000.csv
+huber_loss: 0.00014439362466463557
+mse_loss: 3.4991190756380795e-05
+rmse_loss: 0.005915335219273781
+mae_loss: 0.0037480663459463666
+prede: 0.001226203097266153
+worste: 0.005231052091873211
+r2_score: 0.9986681580580885
+wsdld_20000_24000.csv
+huber_loss: 0.0001152542530168217
+mse_loss: 2.4240558380713474e-05
+rmse_loss: 0.004923470156374818
+mae_loss: 0.003248309560567043
+prede: 0.001056406952616881
+worste: 0.005716078187630216
+r2_score: 0.9990444099542846
+wsdcon_3.csv
+huber_loss: 0.00015446826880152547
+mse_loss: 7.913619978329618e-05
+rmse_loss: 0.008895852954230763
+mae_loss: 0.005669397683181635
+prede: 0.0018060716351643196
+worste: 0.010335466563811464
+r2_score: 0.9972808029036484
+wsdcon_18.csv
+huber_loss: 1.6716994667962823e-05
+mse_loss: 3.6283231503833633e-06
+rmse_loss: 0.0019048157785947078
+mae_loss: 0.0013816388567887683
+prede: 0.0004256385865180646
+worste: 0.0025100590379261182
+r2_score: 0.9998656433628628
+Average Huber_loss: 0.0003552043424172358
+Average Mse_loss: 4.024552064389947e-05
+Average Rmse_loss: 0.0059188815096290716
+Average Mae_loss: 0.004348117582348481
+Average Prede: 0.0014248385942192765
+Average Worste: 0.005829298549353867
+Average R2_score: 0.9983008228767494
+--------------------------------------------------
+Best Parameters: [array(2.6514477), array(0.60115152), array(0.45295811), array(437.9464276), array(2.13245612), array(0.59785199), array(0.65523644)]
+Best Loss: 0.00027506213866039536
