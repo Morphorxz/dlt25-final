@@ -42,10 +42,11 @@ def evaluate_mpl(data: dict, curve_set: list, best_params: list, fig_folder: str
         data[file_name]["r2_score"] = r2_score(loss, pred)
         
         plt.figure()
-        plt.plot(step, pred, label=f"{file_name}_pred", linestyle="--")
-        plt.plot(step, loss, label=f"{file_name}_loss", linestyle="-")
+        file_id = file_name.split("_")[0]
+        plt.plot(step, pred, label=f"{file_id}_pred", linestyle="--")
+        plt.plot(step, loss, label=f"{file_id}_loss", linestyle="-")
         plt.legend()
-        plt.savefig(f"{fig_folder}/{file_name}_mplfit.png")
+        plt.savefig(f"{fig_folder}/{file_id}_mplfit.png")
         plt.close()
         
         print(file_name)

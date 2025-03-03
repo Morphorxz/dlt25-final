@@ -1,10 +1,21 @@
 # Learning Rate Scheduler Repository
 
-This repository implements a framework for modeling, fitting, and optimizing learning rate (LR) schedules using multi-power law (MPL) models. It is designed for researchers and practitioners in machine learning optimization, offering tools to predict training loss dynamics and derive optimized LR schedules.
+This repository implements a framework for fitting, predicting, and optimizing learning rate (LR) schedules using multi-power law (MPL) models. It is designed for researchers and practitioners in machine learning optimization, offering tools to predict training loss dynamics and derive optimized LR schedules.
 
 ## Results
 
 Below are the updated evaluation metrics and best parameters for the MPL model fitted to datasets for 25M, 100M, and 400M parameter models. The results in our paper are not updated due to the compute cost to rerun all experiments.
+
+## Formulation
+
+- The Multi-Power Law is formulated as follows:
+
+    $L(t) = L_0 + A \cdot (S_1(t)+S_W)^{-\alpha} - LD(t), \quad$ where
+    $\quad S_1(t) := \sum_{\tau=1}^{t} \eta_\tau$.
+
+    $LD(t) := B \sum_{k=1}^{t} (\eta_{k-1} - \eta_k) \cdot G(\eta_k^{-\gamma}S_{k}(t))$,
+    $\ S_k(t) := \sum_{\tau = k}^{t} \eta_{\tau}$,
+     and $G(x) := 1 - (Cx + 1)^{-\beta}$.
 
 ### Evaluation Metrics
 
@@ -28,14 +39,8 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 | 100M  | 2.651 | 0.601 | 0.453    | 437.946  | 2.132 | 0.598   | 0.655    |
 | 400M  | 2.375 | 0.654 | 0.429    | 523.425  | 2.025 | 0.594   | 0.635    |
 
-- **Coefficients**: Best parameters for the MPL model 
+<!-- - **Coefficients**: Best parameters for the MPL model  -->
 
-    $L(t) = L_0 + A \cdot (S_1(t)+S_W)^{-\alpha} - LD(t), \quad$ where
-    $\quad S_1(t) := \sum_{\tau=1}^{t} \eta_\tau$.
-
-    $LD(t) := B \sum_{k=1}^{t} (\eta_{k-1} - \eta_k) \cdot G(\eta_k^{-\gamma}S_{k}(t))$,
-    $S_k(t) := \sum_{\tau = k}^{t} \eta_{\tau}$,
-    and $G(x) := 1 - (Cx + 1)^{-\beta}$.
 <!-- - **Best Loss**: 
   - 25M: 0.0002786
   - 100M: 0.0002751
@@ -43,11 +48,11 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 
 ## Features
 - **LR Schedulers**: Includes cosine, constant, two-stage, WSD, and WSDLD schedules.
+- **Optimization**: Optimizes LR schedules using fitted MPL models with constraints of non-increasing LR.
+- **Evaluation**: Provides metrics (e.g., MSE, $R^2$, Huber loss) and visualizations of predicted vs. actual loss.
+- **Testing**: Unit tests for key components ensure reliability.
 <!-- - **MPL Models**: Two models (`MPL` and `MultiPower`) for predicting loss based on LR schedules. -->
 <!-- - **Fitting Pipeline**: Parameter initialization via grid search and fine-tuning with AdamW. -->
-- **Optimization**: Optimizes LR schedules using fitted MPL models with constraints.
-- **Evaluation**: Provides metrics (e.g., MSE, R², Huber loss) and visualizations of predicted vs. actual loss.
-- **Testing**: Unit tests for key components ensure reliability.
 
 ## Installation
 
@@ -58,8 +63,8 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/lr_scheduler_repo.git
-   cd lr_scheduler_repo
+   git clone https://github.com/thu-yao-01-luo/MultiPowerLaw.git
+   cd MultiPowerLaw
    ```
 
 2. Install dependencies:
@@ -80,22 +85,33 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 ### Running the Main Script
 The entry point `main.py` executes the full pipeline: data loading, model fitting, evaluation, and LR schedule optimization. Run it with:
 ```bash
-python main.py --folder_path 400
+python main.py --folder_path 400 > logs/400.log
 ```
-- `--folder_path`: Specifies the model size (`25`, `100`, or `400`). Default is `400`.
+- `--folder_path` or `-f`: Specifies the model size (`25`, `100`, or `400`). Default is `400`.
+
+The optimization can be executed separately with best parameters `PARAMS` in `config.py`.
+```bash
+python main.py -opt_only -f 400
+```
+- `--opt_only` or `-o`: optimization-only option.
+
 
 **Outputs**:
-- **Initial Data Plots**: LR and loss curves in `./<model_size>M/` (e.g., `./400M/cosine_24000_lrs.png`).
-- **Fitted Model Evaluation**: Predicted vs. actual loss plots in `./<model_size>M/` (e.g., `./400M/cosine_24000_mplfit.png`).
+<!-- - **Initial Data Plots**: LR and loss curves in `./<model_size>M/` (e.g., `./400M/cosine_24000_lrs.png`). -->
+- **Fitted Model Evaluation**: Predicted vs. actual loss plots in `./<model_size>M/fit/` (e.g., `./400M/fit/cosine_24000_mplfit.png`).
 - **Optimized LR Schedule**: Saved as `./optimized_schedules/<model_size>.npy` and plotted in `./optimized_schedules/<model_size>.png`.
-- **Optimized Schedule Evaluation**: Predicted loss plots in `./<model_size>M/` (e.g., `./400M/cosine_24000_optimized.png`).
+- **Fitting Process Info**: Print intermediate training losses, gradient norm, and intermediate parameters for fitting process, and detailed evaluation results in final.
+- **Optimization Process Info**: Print intermediate training losses, gradient norm and first and last 5 steps of the optimized schedule in the optimization process.
 
 ### Running Tests
-Unit tests are located in `tests/`. Run them with:
+Unit tests are located in `tests/`. Run them with (under folder `MultiPowerLaw/`):
 ```bash
-pytest tests/
+python -m tests.test_lrs
+python -m python -m tests.test_data_loader -f 400
 ```
-Requires `pytest` (`pip install pytest`).
+- `--folder_path` or `-f`: Specifies the model size (`25`, `100`, or `400`). Default is `400`.
+- **LR schedules visualizaton**: `lrs.png` under folder `MultiPowerLaw/`.
+- **Initial Data Plots**: LR and loss curves in `./<model_size>M/lrs/` and `./<model_size>M/loss/` (e.g., `./400M/lrs/cosine_24000_lrs.png`, `./400M/loss/cosine_24000_loss.png`).
 
 ## Project Structure
 ```

@@ -51,14 +51,13 @@ def log_step(step, total_loss, best_loss, model, grad_norm):
     print(f"Parameters: L0={params['L0']:.4f}, A={params['A']:.4f}, alpha={params['alpha']:.4f}, "
           f"B={params['B']:.4f}, C={params['C']:.4f}, beta={params['beta']:.4f}, gamma={params['gamma']:.4f}")
 
-def plot_loss_curve(loss_history, fig_folder, init_param):
+def plot_loss_curve(loss_history, fig_folder):
     """Plot and save loss curve."""
     plt.figure(figsize=(8, 6))
-    plt.plot(np.arange(len(loss_history)), loss_history, label="Training Loss")
+    plt.plot(np.arange(len(loss_history)), loss_history, label="Fitting Loss")
     plt.xlabel("Step")
     plt.ylabel("Loss")
-    plt.title(f"Loss Curve (Init: {init_param[:3]}...)")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"{fig_folder}/loss_init.png")
+    plt.savefig(f"{fig_folder}/fitting_loss.png")
     plt.close()

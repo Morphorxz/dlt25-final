@@ -105,6 +105,6 @@ def mpl_adam_fit(data, train_set, test_set, init_params, fig_folder,
             if step % eval_interval == 0:
                 log_step(step, total_loss, best_loss, model, grad_norm)
         
-        plot_loss_curve(loss_history, fig_folder, init_param)
+        plot_loss_curve(loss_history, fig_folder)
     
     return best_params, best_loss
