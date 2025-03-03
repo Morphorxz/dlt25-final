@@ -1,35 +1,40 @@
-# Learning Rate Scheduler Repository
+# Multi-Power Law Repository
 
-This repository implements a framework for fitting, predicting, and optimizing learning rate (LR) schedules using multi-power law (MPL) models. It is designed for researchers and practitioners in machine learning optimization, offering tools to predict training loss dynamics and derive optimized LR schedules.
+This repository provides a framework for fitting, predicting, and optimizing learning rate (LR) schedules using Multi-Power Law (MPL) models. Designed for researchers and practitioners in machine learning optimization, it enables analysis of training loss dynamics and derivation of optimized LR schedules in large language models. This work supports research into efficient training strategies for large language models.
 
 ## Results
 
-Below are the updated evaluation metrics and best parameters for the MPL model fitted to datasets for 25M, 100M, and 400M parameter models. The results in our paper are not updated due to the compute cost to rerun all experiments.
+The tables below present updated evaluation metrics and best parameters for the MPL model fitted to datasets for 25M, 100M, and 400M parameter models. Note that results in our associated paper may differ due to the computational cost of rerunning all experiments.
 
-## Formulation
+### Formulation
 
-- The Multi-Power Law is formulated as follows:
+The Multi-Power Law (MPL) model is formulated as:
 
-    $L(t) = L_0 + A \cdot (S_1(t)+S_W)^{-\alpha} - LD(t), \quad$ where
-    $\quad S_1(t) := \sum_{\tau=1}^{t} \eta_\tau$.
+$$
+L(t) = L_0 + A \cdot (S_1(t) + S_W)^{-\alpha} - LD(t)
+$$ 
 
-    $LD(t) := B \sum_{k=1}^{t} (\eta_{k-1} - \eta_k) \cdot G(\eta_k^{-\gamma}S_{k}(t))$,
-    $\ S_k(t) := \sum_{\tau = k}^{t} \eta_{\tau}$,
-     and $G(x) := 1 - (Cx + 1)^{-\beta}$.
+Where:
+- $L(t)$: Predicted loss at step $t$.
+- $S_1(t) = \sum_{\tau=1}^{t} \eta_{\tau}$: Cumulative sum of learning rates up to step $t$.
+- $S_W$: Cumulative LR during warmup (fixed offset).
+- $LD(t) = B \sum_{k=1}^{t} (\eta_{k-1} - \eta_k) \cdot G(\eta_k^{-\gamma} S_k(t))$: Loss drop term.
+- $S_k(t) = \sum_{\tau=k}^{t} \eta_{\tau}$: Partial cumulative LR from step $k$ to $t$.
+- $G(x) = 1 - (C x + 1)^{-\beta}$: Power function as a non-linear transformation.
 
 ### Evaluation Metrics
 
-| Model | $R^2$         | MAE           | RMSE          | PredE         | WorstE        |
-|-------|---------------|---------------|---------------|---------------|---------------|
-| 25M   | 0.9988        | 0.00376       | 0.00465       | 0.00110       | 0.00409       |
-| 100M  | 0.9983        | 0.00435       | 0.00592       | 0.00142       | 0.00583       |
-| 400M  | 0.9978        | 0.00484       | 0.00730       | 0.00168       | 0.00995       |
+| Model | $R^2$   | MAE     | RMSE    | PredE   | WorstE  |
+|-------|---------|---------|---------|---------|---------|
+| 25M   | 0.9988  | 0.00376 | 0.00465 | 0.00110 | 0.00409 |
+| 100M  | 0.9983  | 0.00435 | 0.00592 | 0.00142 | 0.00583 |
+| 400M  | 0.9978  | 0.00484 | 0.00730 | 0.00168 | 0.00995 |
 
-- **$R^2$**: Coefficient of Determination.
-- **MAE**: Mean Absolute Error.
-- **RMSE**: Root Mean Squared Error.
-- **PredE**: Average prediction error (relative).
-- **WorstE**: Worst-case prediction error (relative).
+- **$R^2$**: Coefficient of Determination, measuring goodness of fit.
+- **MAE**: Mean Absolute Error, average absolute prediction error.
+- **RMSE**: Root Mean Squared Error, standard deviation of residuals.
+- **PredE**: Average relative prediction error.
+- **WorstE**: Maximum relative prediction error.
 
 ### Best Parameters
 
@@ -39,25 +44,18 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 | 100M  | 2.651 | 0.601 | 0.453    | 437.946  | 2.132 | 0.598   | 0.655    |
 | 400M  | 2.375 | 0.654 | 0.429    | 523.425  | 2.025 | 0.594   | 0.635    |
 
-<!-- - **Coefficients**: Best parameters for the MPL model  -->
-
-<!-- - **Best Loss**: 
-  - 25M: 0.0002786
-  - 100M: 0.0002751
-  - 400M: 0.0004078 -->
+- **Parameters**: Coefficients for the MPL model, optimized to minimize Huber loss.
 
 ## Features
-- **LR Schedulers**: Includes cosine, constant, two-stage, WSD, and WSDLD schedules.
-- **Optimization**: Optimizes LR schedules using fitted MPL models with constraints of non-increasing LR.
-- **Evaluation**: Provides metrics (e.g., MSE, $R^2$, Huber loss) and visualizations of predicted vs. actual loss.
-- **Testing**: Unit tests for key components ensure reliability.
-<!-- - **MPL Models**: Two models (`MPL` and `MultiPower`) for predicting loss based on LR schedules. -->
-<!-- - **Fitting Pipeline**: Parameter initialization via grid search and fine-tuning with AdamW. -->
+- **LR Schedulers**: Supports cosine, constant, two-stage, WSD, and WSDLD schedules.
+- **Optimization**: Derives optimized LR schedules with non-increasing constraints using fitted MPL models.
+- **Evaluation**: Generates metrics (e.g., MSE, $R^2$, Huber loss) and visualizations comparing predicted vs. actual loss.
+- **Testing**: Includes unit tests for reliability of core components.
 
 ## Installation
 
 ### Prerequisites
-- Python 3.8+
+- Python 3.8 or higher
 - Git
 
 ### Setup
@@ -71,9 +69,9 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
    ```bash
    pip install -r requirements.txt
    ```
-   Dependencies include: `numpy`, `torch`, `scipy`, `matplotlib`, `tqdm`, `sklearn`.
+   Required packages: `numpy`, `torch`, `scipy`, `matplotlib`, `tqdm`, `sklearn`.
 
-3. (Optional) Use a virtual environment:
+3. (Optional) Set up a virtual environment:
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -83,99 +81,95 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 ## Usage
 
 ### Running the Main Script
-The entry point `main.py` executes the full pipeline: data loading, model fitting, evaluation, and LR schedule optimization. Run it with:
+The `main.py` script executes the full pipeline: data loading, model fitting, evaluation, and LR schedule optimization. Run it with:
 ```bash
-python -u main.py --folder_path 400 > logs/400.log
+python -u main.py --folder_path 400
 ```
-- `--folder_path` or `-f`: Specifies the model size (`25`, `100`, or `400`). Default is `400`.
+- `--folder_path` or `-f`: Model size (`25`, `100`, or `400`). Default: `400`.
 
-The optimization can be executed separately with best parameters `PARAMS` in `config.py`.
+For optimization only, use precomputed parameters from `config.py`:
 ```bash
-python main.py -opt_only -f 400
+python main.py --opt_only --folder_path 400
 ```
-- `--opt_only` or `-o`: optimization-only option.
+- `--opt_only` or `-o`: Runs optimization standalone.
 
-For a easy start, we also provide a `run_all.sh`, so that you can run:
+For a easy start, we provide `run_all.sh` to sequentially run test and main scripts across model sizes:
 ```bash
 bash run_all.sh
 ```
-to sequentially go through all tests and main tests.
 
 **Outputs**:
-<!-- - **Initial Data Plots**: LR and loss curves in `./<model_size>M/` (e.g., `./400M/cosine_24000_lrs.png`). -->
-- **Fitted Model Evaluation**: Predicted vs. actual loss plots in `./<model_size>M/fit/` (e.g., `./400M/fit/cosine_24000_mplfit.png`).
+- **Fitted Model Evaluation**: Plots in `./<model_size>M/fit/` (e.g., `./400M/fit/cosine_24000_mplfit.png`).
 - **Optimized LR Schedule**: Saved as `./optimized_schedules/<model_size>.npy` and plotted in `./optimized_schedules/<model_size>.png`.
-- **Fitting Process Info**: Print intermediate training losses, gradient norm, and intermediate parameters for fitting process, and detailed evaluation results in final.
-- **Optimization Process Info**: Print intermediate training losses, gradient norm and first and last 5 steps of the optimized schedule in the optimization process.
+- **Logs**: Training progress, metrics, and optimization details in `logs/<model_size>.log`.
 
 ### Running Tests
-Unit tests are located in `tests/`. Run them with (under folder `MultiPowerLaw/`):
+Unit tests are in `tests/`. Execute them from the root directory:
 ```bash
-python -m tests.test_lrs
-python -m python -m tests.test_data_loader -f 400
+python -m tests.test_lr_schedulers
+python -m tests.test_data_loader --folder_path 400
 ```
-- `--folder_path` or `-f`: Specifies the model size (`25`, `100`, or `400`). Default is `400`.
-- **LR schedules visualizaton**: `lrs.png` under folder `MultiPowerLaw/`.
-- **Initial Data Plots**: LR and loss curves in `./<model_size>M/lrs/` and `./<model_size>M/loss/` (e.g., `./400M/lrs/cosine_24000_lrs.png`, `./400M/loss/cosine_24000_loss.png`).
+- Outputs LR schedule visualizations in `lrs.png`.
 
 ## Project Structure
 ```
-lr_scheduler_repo/
+MultiPowerLaw/
 ├── src/                # Core source code
-│   ├── __init__.py     # Marks src as a package
+│   ├── __init__.py     # Package marker
 │   ├── config.py       # Constants and configurations
 │   ├── data_loader.py  # Data loading and preprocessing
-│   ├── lr_schedulers.py# LR scheduler functions
-│   ├── models.py       # MPL and MultiPower model definitions
+│   ├── lr_schedulers.py# LR scheduler implementations
+│   ├── models.py       # MPL and MultiPower models
 │   ├── fitting.py      # Model fitting logic
-│   ├── evaluation.py   # Evaluation and plotting functions
+│   ├── evaluation.py   # Evaluation and plotting
 │   ├── optimization.py # LR schedule optimization
 │   └── utils.py        # Utility functions
 ├── tests/              # Unit tests
-│   ├── __init__.py     # Marks tests as a package
+│   ├── __init__.py     # Package marker
 │   ├── test_lr_schedulers.py
 │   └── test_data_loader.py
-├── main.py             # Entry point script
+├── logs/               # Log files
+├── main.py             # Entry point
 ├── requirements.txt    # Dependencies
-└── README.md           # This file
+└── README.md           # Documentation
 ```
 
 ### Key Components
-- **`config.py`**: Defines datasets, file paths, and constants (e.g., `OPT_PATH` for optimized schedules).
-- **`lr_schedulers.py`**: Implements various LR schedules.
-- **`models.py`**: Contains `MPL` (primary model for fitting and optimization) and `MultiPower` (deprecated version).
-- **`fitting.py`**: Fits the MPL model to training data.
-- **`optimization.py`**: Optimizes LR schedules using the fitted MPL model.
-- **`evaluation.py`**: Evaluates model performance with metrics and plots.
+- **`config.py`**: Defines datasets, paths (e.g., `OPT_PATH`), and precomputed parameters.
+- **`lr_schedulers.py`**: Implements LR schedules used in training data.
+- **`models.py`**: Contains `MPL` (core model) and `MultiPower` (deprecated).
+- **`fitting.py`**: Fits MPL to training data using AdamW with early stopping.
+- **`optimization.py`**: Optimizes LR schedules with the fitted MPL model.
+- **`evaluation.py`**: Provides metrics and visualizations.
 
 ## Data Requirements
-- **Format**: CSV files with columns `step`, `col1` (`lr` in our files), `loss` (e.g., `0,0.0003,2.0`).
+- **Format**: CSV files with `step`, `lr`, `loss` columns (e.g., `0,0.0003,2.0`).
 - **Location**: Specified in `FOLDER_PATHS` (e.g., `./csv_400/`).
-- **Names**: Must match `TRAIN_SET` and `TEST_SET` (e.g., `cosine_24000.csv`).
+- **Names**: Must match `TRAIN_SET` and `TEST_SET` in `config.py` (e.g., `cosine_24000.csv`).
 
 ## Customization
-- **New Schedulers**: Add to `lr_schedulers.py` and update `data_loader.py`.
-- **Model Adjustments**: Modify `models.py` for different formulations.
-- **Hyperparameters**: Tune fitting (`mpl_adam_fit`) or optimization (`optimize_lr_schedule`) parameters in `main.py`.
+- **Add Schedulers**: Extend `lr_schedulers.py` and update `data_loader.py`.
+- **Modify Models**: Adjust `models.py` for alternative formulations.
+- **Tune Hyperparameters**: Edit `fitting.py` or `optimization.py` parameters via `main.py`.
 
 ## Contributing
-1. Fork the repo.
-2. Create a feature branch: `git checkout -b feature/your-feature`.
-3. Commit changes: `git commit -m "Add your feature"`.
+1. Fork the repository.
+2. Create a branch: `git checkout -b feature/your-feature`.
+3. Commit: `git commit -m "Add your feature"`.
 4. Push: `git push origin feature/your-feature`.
-5. Open a pull request.
+5. Submit a pull request.
 
-Include tests and update documentation for new features.
+Include tests and documentation updates with contributions.
 
 ## License
-MIT License (to be added in a `LICENSE` file).
+MIT License (see `LICENSE` file, to be added).
 
 ## Acknowledgments
-- Built for optimization research in deep learning.
-- Powered by PyTorch, NumPy, and other open-source libraries.
-- The optimization script is credited to [Kaifeng Lyu](https://github.com/vfleaking)
+- Developed for deep learning optimization research.
+- Built with PyTorch, NumPy, and other open-source tools.
+- Optimization script credited to [Kaifeng Lyu](https://github.com/vfleaking).
 
 ## Contact
-For issues or questions, open a GitHub issue or email `luokr2002@outlook.com`.
+For questions or issues, file a GitHub issue or email `luokr2002@outlook.com`.
 
-Explore and optimize your learning rate schedules with ease!
+Optimize your training with Multi-Power Law schedules!
