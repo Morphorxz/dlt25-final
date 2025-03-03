@@ -162,7 +162,7 @@ MultiPowerLaw/
 Include tests and documentation updates with contributions.
 
 ## License
-MIT License (see `LICENSE` file, to be added).
+MIT License (see `LICENSE` file).
 
 ## Acknowledgments
 - Developed for deep learning optimization research.
@@ -173,3 +173,8 @@ MIT License (see `LICENSE` file, to be added).
 For questions or issues, file a GitHub issue or email `luokr2002@outlook.com`.
 
 Optimize your training with Multi-Power Law schedules!
+
+## TODO
+
+- Add citation file
+- Add arxiv link
