@@ -1,6 +1,8 @@
+# src/utils.py
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
+import logging
 from scipy.special import huber
 
 def torch_huber(delta: float, r: torch.Tensor) -> torch.Tensor:
@@ -45,11 +47,21 @@ def compute_grad_norm(model):
     return torch.cat(grads).norm() if grads else torch.tensor(0.0)
 
 def log_step(step, total_loss, best_loss, model, grad_norm):
-    """Log training progress."""
+    """
+    Log training progress with current step details.
+
+    Args:
+        step (int): Current training step.
+        total_loss (float): Loss at the current step.
+        best_loss (float): Best loss observed so far.
+        model (nn.Module): MPL model instance.
+        grad_norm (float): Gradient norm at the current step.
+    """
+    logger = logging.getLogger(__name__)
     params = {name: param.item() for name, param in model.named_parameters()}
-    print(f"\nStep {step:4d}: Loss={total_loss:.6f}, Best Loss={best_loss:.6f}, Grad Norm={grad_norm:.2e}")
-    print(f"Parameters: L0={params['L0']:.4f}, A={params['A']:.4f}, alpha={params['alpha']:.4f}, "
-          f"B={params['B']:.4f}, C={params['C']:.4f}, beta={params['beta']:.4f}, gamma={params['gamma']:.4f}")
+    logger.info(f"Step {step:4d}: Loss={total_loss:.6f}, Best Loss={best_loss:.6f}, Grad Norm={grad_norm:.2e}")
+    logger.info(f"Parameters: L0={params['L0']:.4f}, A={params['A']:.4f}, alpha={params['alpha']:.4f}, "
+                f"B={params['B']:.4f}, C={params['C']:.4f}, beta={params['beta']:.4f}, gamma={params['gamma']:.4f}")
 
 def plot_loss_curve(loss_history, fig_folder):
     """Plot and save loss curve."""
@@ -59,5 +71,5 @@ def plot_loss_curve(loss_history, fig_folder):
     plt.ylabel("Loss")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"{fig_folder}/fitting_loss.png")
+    plt.savefig(f"{fig_folder}/loss_monitor.png")
     plt.close()

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from .lr_schedules import cosine_lrs, const_lrs, two_stage_lrs, wsd_lrs, wsdld_lrs
 from .config import FILES
@@ -14,7 +15,8 @@ def load_data(folder_path: str) -> dict:
     """
     data = {}
     for file_name in FILES:
-        file_path = folder_path + file_name
+        # file_path = folder_path + file_name
+        file_path = os.path.join(folder_path, file_name)
         file_data = np.genfromtxt(file_path, delimiter=',', skip_header=1)
         data[file_name] = {
             "step": file_data[:, 0].astype(int),

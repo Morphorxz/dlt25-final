@@ -85,7 +85,7 @@ Below are the updated evaluation metrics and best parameters for the MPL model f
 ### Running the Main Script
 The entry point `main.py` executes the full pipeline: data loading, model fitting, evaluation, and LR schedule optimization. Run it with:
 ```bash
-python main.py --folder_path 400 > logs/400.log
+python -u main.py --folder_path 400 > logs/400.log
 ```
 - `--folder_path` or `-f`: Specifies the model size (`25`, `100`, or `400`). Default is `400`.
 
@@ -95,6 +95,11 @@ python main.py -opt_only -f 400
 ```
 - `--opt_only` or `-o`: optimization-only option.
 
+For a easy start, we also provide a `run_all.sh`, so that you can run:
+```bash
+bash run_all.sh
+```
+to sequentially go through all tests and main tests.
 
 **Outputs**:
 <!-- - **Initial Data Plots**: LR and loss curves in `./<model_size>M/` (e.g., `./400M/cosine_24000_lrs.png`). -->
@@ -129,9 +134,7 @@ lr_scheduler_repo/
 ├── tests/              # Unit tests
 │   ├── __init__.py     # Marks tests as a package
 │   ├── test_lr_schedulers.py
-│   ├── test_data_loader.py
-│   ├── test_models.py
-│   └── test_fitting.py
+│   └── test_data_loader.py
 ├── main.py             # Entry point script
 ├── requirements.txt    # Dependencies
 └── README.md           # This file
@@ -140,14 +143,14 @@ lr_scheduler_repo/
 ### Key Components
 - **`config.py`**: Defines datasets, file paths, and constants (e.g., `OPT_PATH` for optimized schedules).
 - **`lr_schedulers.py`**: Implements various LR schedules.
-- **`models.py`**: Contains `MPL` (primary model for fitting and optimization) and `MultiPower`.
+- **`models.py`**: Contains `MPL` (primary model for fitting and optimization) and `MultiPower` (deprecated version).
 - **`fitting.py`**: Fits the MPL model to training data.
 - **`optimization.py`**: Optimizes LR schedules using the fitted MPL model.
 - **`evaluation.py`**: Evaluates model performance with metrics and plots.
 
 ## Data Requirements
-- **Format**: CSV files with columns `step`, `col1`, `loss` (e.g., `0,1,2.0`).
-- **Location**: Specified in `FOLDER_PATHS` (e.g., `/home/kairong/lr_drop_law/csv_400_converted/`).
+- **Format**: CSV files with columns `step`, `col1` (`lr` in our files), `loss` (e.g., `0,0.0003,2.0`).
+- **Location**: Specified in `FOLDER_PATHS` (e.g., `./csv_400/`).
 - **Names**: Must match `TRAIN_SET` and `TEST_SET` (e.g., `cosine_24000.csv`).
 
 ## Customization
@@ -170,8 +173,9 @@ MIT License (to be added in a `LICENSE` file).
 ## Acknowledgments
 - Built for optimization research in deep learning.
 - Powered by PyTorch, NumPy, and other open-source libraries.
+- The optimization script is credited to [Kaifeng Lyu](https://github.com/vfleaking)
 
 ## Contact
-For issues or questions, open a GitHub issue or email `<your-email>`.
+For issues or questions, open a GitHub issue or email `luokr2002@outlook.com`.
 
 Explore and optimize your learning rate schedules with ease!
