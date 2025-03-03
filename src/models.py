@@ -52,6 +52,7 @@ class MPL(nn.Module):
         r = torch.log(loss) - torch.log(pred.clamp(min=1e-10))  # Avoid log(0)
         return torch_huber(0.001, r).sum()
 
+@DeprecationWarning
 class MultiPower(nn.Module):
     """
     Deprecated alternative Multi-Power model for loss prediction.

@@ -101,7 +101,7 @@ def mpl_adam_fit(
     patience=FIT_PATIENCE
 ):
     """
-    Fit the MPL model using AdamW with early stopping.
+    Fit the MPL model using AdamW.
 
     Args:
         data (dict): Dataset containing steps, learning rates, and losses.
@@ -113,9 +113,9 @@ def mpl_adam_fit(
         lr1 (float): Learning rate for L0, A, B, C parameters (default from config).
         lr2 (float): Learning rate for alpha, beta, gamma parameters (default from config).
         max_steps (int): Maximum training steps (default from config).
-        grad_norm_thr (float): Gradient norm threshold for early stopping (default from config).
-        loss_thr (float): Loss improvement threshold for early stopping (default from config).
-        patience (int): Steps without improvement before early stopping (default from config).
+        grad_norm_thr (float): Gradient norm threshold for stopping training (default from config).
+        loss_thr (float): Loss improvement threshold for stopping training (default from config).
+        patience (int): Steps without improvement before stopping training (default from config).
 
     Returns:
         tuple: Best parameters and best loss value.
@@ -147,12 +147,12 @@ def mpl_adam_fit(
                 steps_no_improve += 1
 
             if step > patience and steps_no_improve >= patience:
-                logger.info(f"Early stopping at step {step}: No improvement for {patience} steps.")
+                logger.info(f"Stopping at step {step}: No improvement for {patience} steps.")
                 break
 
             grad_norm = compute_grad_norm(model)
             if grad_norm < grad_norm_thr:
-                logger.info(f"Early stopping at step {step}: Gradient norm {grad_norm:.2e} < {grad_norm_thr:.2e}")
+                logger.info(f"Stopping at step {step}: Gradient norm {grad_norm:.2e} < {grad_norm_thr:.2e}")
                 break
 
             if total_loss < best_loss:
