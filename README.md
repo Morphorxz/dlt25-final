@@ -167,7 +167,7 @@ MIT License (see `LICENSE` file).
 ## Acknowledgments
 - Developed for deep learning optimization research.
 - Built with PyTorch, NumPy, and other open-source tools.
-- Optimization script credited to [Kaifeng Lyu](https://github.com/vfleaking).
+- Optimization script is credited to [Kaifeng Lyu](https://github.com/vfleaking).
 
 ## Contact
 For questions or issues, file a GitHub issue or email `luokr2002@outlook.com`.
