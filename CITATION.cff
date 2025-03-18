@@ -18,18 +18,17 @@ authors:
   - given-names: "Wenguang"
     family-names: "Chen"
 title: "A Multi-Power Law for Loss Curve Prediction Across Learning Rate Schedules"
-version: "1.0"
-date-released: "2025-03-17"
+date-released: "2025-03-17"  # Maps to year={2025}, month={mar}
 identifiers:
-  - type: "arxiv"  # Lowercase to match common convention
+  - type: "arxiv"
     value: "2503.12811"
-  - type: "doi"
-    value: "10.48550/arXiv.2503.12811"
-license: "MIT"
-repository-code: "https://github.com/thu-yao-01-luo/MultiPowerLaw/"
-url: "https://arxiv.org/abs/2503.12811"
+    description: "arXiv preprint, category cs.LG"  # For primaryClass
+url: "https://arxiv.org/abs/2503.12811"  # Primary URL for the article
+license: "MIT"  # Optional, kept for metadata completeness
+repository-code: "https://github.com/thu-yao-01-luo/MultiPowerLaw/"  # Optional, kept but deprioritized
 keywords:
   - "learning rate schedules"
   - "loss curve prediction"
   - "machine learning optimization"
   - "large language models"
+  - "cs.LG"
