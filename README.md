@@ -1,6 +1,6 @@
 # Multi-Power Law Repository
 
-This repository provides a framework for fitting, predicting, and optimizing learning rate (LR) schedules using Multi-Power Law (MPL) models. Designed for researchers and practitioners in machine learning optimization, it enables analysis of training loss dynamics and derivation of optimized LR schedules in large language models. This work supports research into efficient training strategies for large language models.
+This repository provides a framework for fitting, predicting, and optimizing learning rate (LR) schedules using Multi-Power Law (MPL) models. Designed for researchers and practitioners in machine learning optimization, it enables analysis of training loss dynamics and derivation of optimized LR schedules in large language models. This work supports research into efficient training strategies for large language models. For more details, check out our paper: [arXiv:2503.12811](https://arxiv.org/abs/2503.12811).  
 
 ## Results
 
@@ -173,8 +173,3 @@ MIT License (see `LICENSE` file).
 For questions or issues, file a GitHub issue or email `luokr2002@outlook.com`.
 
 Optimize your training with Multi-Power Law schedules!
-
-## TODO
-
-- Add citation file
-- Add arxiv link
