@@ -1,0 +1,9 @@
+@misc{luo2025multipowerlawlosscurve,
+      title={A Multi-Power Law for Loss Curve Prediction Across Learning Rate Schedules}, 
+      author={Kairong Luo and Haodong Wen and Shengding Hu and Zhenbo Sun and Zhiyuan Liu and Maosong Sun and Kaifeng Lyu and Wenguang Chen},
+      year={2025},
+      eprint={2503.12811},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2503.12811}, 
+}
