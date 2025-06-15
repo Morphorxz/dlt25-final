@@ -1,3 +1,26 @@
+# Topics in Deep Learning Theory - Final Project
+
+This repository contains code for my final project in the **Topics in Deep Learning Theory** course. It is based on the public implementation by [Luo et al. (2024)](https://github.com/thu-yao-01-luo/MultiPowerLaw), with minor modifications to accommodate course-provided datasets.
+
+## My Work
+
+- **`multi_power_law_main.py`** (new script)
+  - Trains multi-power law scaling models using datasets specified by the list `train_keys` (e.g., `wsd`, `811`, `cosine`).
+  - Predicts loss curves for all keys provided.
+  - Saves results automatically in directories: `./fit/<train_keys>/`.
+  - Usage example:
+  
+  ```bash
+  python multi_power_law_main.py  # Adjust the `train_keys` list in the cript as needed
+
+- `evaluation.py` (modified)
+  - Enhanced plotting functionality: plots are generated with corresponding titles and saved into specific directories.
+  - Added `plt.show()` for interactive visualization and detailed local inspection.
+
+The following is the original `README.md` from the upstream repository, preserved for reference.
+
+---
+
 # Multi-Power Law Repository
 
 This repository provides a framework for fitting, predicting, and optimizing learning rate (LR) schedules using Multi-Power Law (MPL) models. Designed for researchers and practitioners in machine learning optimization, it enables analysis of training loss dynamics and derivation of optimized LR schedules in large language models. This work supports research into efficient training strategies for large language models. For more details, check out our paper: [arXiv:2503.12811](https://arxiv.org/abs/2503.12811).  
