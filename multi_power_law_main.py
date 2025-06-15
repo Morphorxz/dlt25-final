@@ -8,9 +8,7 @@ logging.getLogger().addHandler(logging.NullHandler())
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-from src.utils import compute_loss
 from src.fitting import generate_init_params, initialize_params, mpl_adam_fit
 from src.models import MPL
 from src.evaluation import evaluate_mpl
@@ -89,8 +87,6 @@ for key, df in data_raw.items():
 # ---------------------------- 拟合模型 ----------------------------
 init_param = initialize_params(data_dict, train_keys)
 init_params = generate_init_params(init_param)
-# model = MPL(init_params)
-# model.fit(data_dict, train_keys)
 best_params, best_loss = mpl_adam_fit(data_dict, train_keys, test_keys, init_params, output_dir)
 
 # Evaluate
@@ -98,29 +94,5 @@ evaluate_mpl(data_dict, train_keys, best_params, output_dir, 'Training set: '+fo
 evaluate_mpl(data_dict, test_keys, best_params, output_dir, 'Training set: '+foldername)
 # logger.info(f"Best Loss: {best_loss}")
 print(f"Best Loss: {best_loss}")
-
-# ---------------------------- 可视化结果 ----------------------------
-# for key in train_keys + test_keys:
-#     step = data_dict[key]["step"]
-#     true_loss = data_dict[key]["loss"]
-#     pred_loss = model.predict(data_dict[key]["lrs"], step)
-
-#     mse = compute_loss(pred_loss, true_loss)
-
-#     plt.figure(figsize=(8, 5))
-#     plt.plot(step, true_loss, label="True Loss", linewidth=1)
-#     plt.plot(step, pred_loss, label=f"MPL Predict (MSE={mse:.4f})", linestyle="--")
-#     plt.xlabel("Step")
-#     plt.ylabel("Loss")
-#     plt.title(f"Schedule: {key}")
-#     plt.legend()
-#     plt.grid(True)
-#     plt.tight_layout()
-
-#     fname = key.replace(":", "_").replace("/", "_") + ".png"
-#     plt.savefig(os.path.join(output_dir, fname))
-#     plt.close()
-
-#     print(f"[✓] 绘图完成: {fname}")
 
 print("\n所有拟合与预测完成。")
