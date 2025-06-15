@@ -11,7 +11,7 @@ This repository contains code for my final project in the **Topics in Deep Learn
   - Usage example:
   
   ```bash
-  python multi_power_law_main.py  # Adjust the `train_keys` list in the cript as needed
+  python multi_power_law_main.py  # Adjust the `train_keys` list in the script as needed
 
 - `evaluation.py` (modified)
   - Enhanced plotting functionality: plots are generated with corresponding titles and saved into specific directories.
